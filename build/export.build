@@ -1,0 +1,6 @@
+$out_root/
+{
+  include libcurlez/
+}
+
+export $out_root/libcurlez/$import.target

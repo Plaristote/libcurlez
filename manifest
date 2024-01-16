@@ -1,0 +1,12 @@
+: 1
+name: libcurlez
+version: 1.0.0
+language: c++
+summary: c++ wrapper for libcurl's easy API
+license: BSD-3-Clause
+description-file: README.md
+url: https://github.com/Plaristote/libcurlez.git
+email: michael@unetresgrossebite.com
+depends: * build2 >= 0.16.0
+depends: * bpkg >= 0.16.0
+depends: libcurl ^8.4.0

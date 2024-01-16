@@ -1,0 +1,45 @@
+intf_libs = # Interface dependencies.
+impl_libs = # Implementation dependencies.
+import intf_libs += libcurl%lib{curl}
+
+lib{curlez}: {hxx ixx txx cxx}{** -version} hxx{version} $impl_libs $intf_libs
+
+hxx{version}: in{version} $src_root/manifest
+
+hxx{export}@./: cxx.importable = false
+
+# Build options.
+#
+cxx.poptions =+ "-I$out_root" "-I$src_root"
+
+{hbmia obja}{*}: cxx.poptions += -DLIBCURLEZ_STATIC_BUILD
+{hbmis objs}{*}: cxx.poptions += -DLIBCURLEZ_SHARED_BUILD
+
+# Export options.
+#
+lib{curlez}:
+{
+  cxx.export.poptions = "-I$out_root" "-I$src_root"
+  cxx.export.libs = $intf_libs
+}
+
+liba{curlez}: cxx.export.poptions += -DLIBCURLEZ_STATIC
+libs{curlez}: cxx.export.poptions += -DLIBCURLEZ_SHARED
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  lib{curlez}: bin.lib.version = "-$version.project_id"
+else
+  lib{curlez}: bin.lib.version = "-$version.major.$version.minor"
+
+# Install into the libcurlez/ subdirectory of, say, /usr/include/
+# recreating subdirectories.
+#
+{hxx ixx txx}{*}:
+{
+  install         = include/libcurlez/
+  install.subdirs = true
+}
