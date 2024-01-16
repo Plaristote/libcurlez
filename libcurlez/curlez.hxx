@@ -21,6 +21,7 @@ public:
   Curl& body(std::string_view);
   Curl& header(std::string_view, std::string_view);
   Curl& header(std::string_view, const std::string&);
+  Curl& header(std::string_view, const char*);
   Curl& follow_redirects();
   Curl& ignore_ssl_errors();
 

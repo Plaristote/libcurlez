@@ -1,5 +1,6 @@
 #include <libcurlez/curlez.hxx>
 #include <sstream>
+#include <cstring>
 
 using namespace std;
 
@@ -59,6 +60,11 @@ Curl& Curl::header(std::string_view name, std::string_view value)
 Curl& Curl::header(std::string_view name, const std::string& value)
 {
   return header(name, string_view(value.c_str(), value.length()));
+}
+
+Curl& Curl::header(std::string_view name, const char* value)
+{
+  return header(name, string_view(value, strlen(value)));
 }
 
 Curl& Curl::follow_redirects()
