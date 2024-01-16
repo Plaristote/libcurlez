@@ -9,4 +9,4 @@ url: https://github.com/Plaristote/libcurlez.git
 email: michael@unetresgrossebite.com
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
-depends: libcurl ^8.4.0
+depends: libcurl >= 7.76.0
