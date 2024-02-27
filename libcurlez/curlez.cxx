@@ -40,6 +40,11 @@ Curl& Curl::url(const std::string& url_)
   return *this;
 }
 
+Curl& Curl::body(const std::string_view data)
+{
+  return body(std::string(data));
+}
+
 Curl& Curl::body(const std::string& data)
 {
   header("Content-Length", data.length());
@@ -48,7 +53,7 @@ Curl& Curl::body(const std::string& data)
   return *this;
 }
 
-Curl& Curl::header(std::string_view name, std::string_view value)
+Curl& Curl::header(const std::string_view name, std::string_view value)
 {
   stringstream entry;
 
@@ -57,12 +62,12 @@ Curl& Curl::header(std::string_view name, std::string_view value)
   return *this;
 }
 
-Curl& Curl::header(std::string_view name, const std::string& value)
+Curl& Curl::header(const std::string_view name, const std::string& value)
 {
   return header(name, string_view(value.c_str(), value.length()));
 }
 
-Curl& Curl::header(std::string_view name, const char* value)
+Curl& Curl::header(const std::string_view name, const char* value)
 {
   return header(name, string_view(value, strlen(value)));
 }

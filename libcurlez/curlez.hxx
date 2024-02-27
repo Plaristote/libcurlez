@@ -18,10 +18,10 @@ public:
   Curl& method(const std::string&);
   Curl& url(const std::string&);
   Curl& body(const std::string&);
-  Curl& body(std::string_view);
-  Curl& header(std::string_view, std::string_view);
-  Curl& header(std::string_view, const std::string&);
-  Curl& header(std::string_view, const char*);
+  Curl& body(const std::string_view);
+  Curl& header(const std::string_view, std::string_view);
+  Curl& header(const std::string_view, const std::string&);
+  Curl& header(const std::string_view, const char*);
   Curl& follow_redirects();
   Curl& ignore_ssl_errors();
 
