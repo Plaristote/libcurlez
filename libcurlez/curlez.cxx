@@ -89,6 +89,7 @@ Curl& Curl::stderr(std::ostream& stream)
 {
   stderr_pipe.reset(new FileToStreamPipe(stream));
   option(CURLOPT_STDERR, stderr_pipe->handle());
+  return *this;
 }
 
 void Curl::flush_stderr()

@@ -72,3 +72,24 @@ int main()
   return query.perform() == 200;
 }
 ```
+
+Log curl stderr to a stream:
+
+```c++
+#include <libcurlez/curlez.hxx>
+#include <iostream>
+
+int main()
+{
+  Curl query;
+  std::ostringstream stream;
+
+  query.url("http://google.fr")
+       .follow_redirects()
+       .verbose(true)
+       .stderr(stream)
+       .perform();
+  std::cout << "Curl logs:" << std::endl << stream.str() << std::endl;
+  return 0;
+}
+```

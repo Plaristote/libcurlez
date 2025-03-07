@@ -51,6 +51,11 @@ public:
     return *this;
   }
 
+  inline Curl& verbose(bool value)
+  {
+    return option<long>(CURLOPT_VERBOSE, value ? 1 : 0);
+  }
+
   CURL* get_handle() const
   {
     return handle;

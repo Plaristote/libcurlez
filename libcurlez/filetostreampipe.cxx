@@ -22,7 +22,7 @@ FileToStreamPipe::~FileToStreamPipe()
 
 void FileToStreamPipe::read_all()
 {
-  size_t buffer_size = 2048;
+  constexpr size_t buffer_size = 2048;
   char buffer[buffer_size];
   int read_bytes = read(pipe_fd[0], buffer, buffer_size);
 

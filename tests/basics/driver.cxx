@@ -61,4 +61,19 @@ int main ()
 
     assert(query.perform() == 200);
   }
+
+  // Can redirect CURLOPT_STDERR to a stream
+  //
+  {
+    ostringstream stream;
+    Curl curl;
+    int status = curl
+      .verbose(true)
+      .stderr(stream)
+      .url(TEST_URL)
+      .follow_redirects()
+      .ignore_ssl_errors()
+      .perform();
+    assert(stream.str().length() > 0);
+  }
 }
