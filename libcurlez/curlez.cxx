@@ -1,4 +1,5 @@
 #include <libcurlez/curlez.hxx>
+#include <libcurlez/filetostreampipe.hxx>
 #include <sstream>
 #include <cstring>
 
@@ -84,6 +85,18 @@ Curl& Curl::ignore_ssl_errors()
   return *this;
 }
 
+Curl& Curl::stderr(std::ostream& stream)
+{
+  stderr_pipe.reset(new FileToStreamPipe(stream));
+  option(CURLOPT_STDERR, stderr_pipe->handle());
+}
+
+void Curl::flush_stderr()
+{
+  stderr_pipe->flush();
+  stderr_pipe->read_all();
+}
+
 unsigned short Curl::perform()
 {
   long status;
@@ -91,6 +104,8 @@ unsigned short Curl::perform()
   if (headers)
     curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers);
   result = curl_easy_perform(handle);
+  if (stderr_pipe)
+    flush_stderr();
   if (result == CURLE_OK)
   {
     curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &status);

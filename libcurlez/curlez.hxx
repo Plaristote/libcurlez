@@ -4,6 +4,10 @@
 #include <string_view>
 #include <string>
 #include <stdexcept>
+#include <ostream>
+#include <memory>
+
+class FileToStreamPipe;
 
 class LIBCURLEZ_SYMEXPORT Curl
 {
@@ -24,6 +28,7 @@ public:
   Curl& header(const std::string_view, const char*);
   Curl& follow_redirects();
   Curl& ignore_ssl_errors();
+  Curl& stderr(std::ostream&);
 
   template<typename PARAMETER_TYPE>
   Curl& header(std::string_view name, PARAMETER_TYPE value)
@@ -61,10 +66,12 @@ protected:
 private:
   static size_t header_callback(char* buffer, size_t size, size_t nitems, void* userdata);
   static size_t write_data(void* ptr, size_t size, size_t nmemb, void* userdata);
+  void flush_stderr();
 
   CURL* handle;
   CURLcode result;
   struct curl_slist* headers = nullptr;
+  std::unique_ptr<FileToStreamPipe> stderr_pipe;
 };
 
 class LIBCURLEZ_SYMEXPORT CurlReader : public Curl
