@@ -27,7 +27,7 @@ std::string CurlReader::response_header(const std::string& name) const
 
 void CurlReader::on_received_body(std::string_view data)
 {
-  stored_body = data;
+  stored_body.append(data);
 }
 
 std::string_view CurlReader::response_body() const
