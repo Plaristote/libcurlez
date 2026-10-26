@@ -21,7 +21,7 @@ public:
   unsigned short perform();
   Curl& method(const std::string&);
   Curl& url(const std::string&);
-  Curl& body(const std::string&);
+  Curl& body(const std::string& value) { return body(std::string_view(value)); }
   Curl& body(const std::string_view);
   Curl& header(const std::string_view, std::string_view);
   Curl& header(const std::string_view, const std::string&);

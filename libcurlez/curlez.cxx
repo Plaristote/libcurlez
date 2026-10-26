@@ -43,13 +43,8 @@ Curl& Curl::url(const std::string& url_)
 
 Curl& Curl::body(const std::string_view data)
 {
-  return body(std::string(data));
-}
-
-Curl& Curl::body(const std::string& data)
-{
   header("Content-Length", data.length());
-  curl_easy_setopt(handle, CURLOPT_POSTFIELDS, data.c_str());
+  curl_easy_setopt(handle, CURLOPT_POSTFIELDS, data.data());
   curl_easy_setopt(handle, CURLOPT_POSTFIELDSIZE, data.length());
   return *this;
 }
